@@ -8,6 +8,7 @@ class Fib extends Component {
     index: ''
   };
 
+
   componentDidMount() {
     this.fetchValues();
     this.fetchIndexes();
@@ -55,14 +56,14 @@ class Fib extends Component {
   render() {
     return (
       <div>
-        <form onSubmit={this.handleSubmit}>
+        <div>
           <label>Enter your index:</label>
           <input
             value={this.state.index}
             onChange={event => this.setState({ index: event.target.value })}
           />
-          <button>Submit</button>
-        </form>
+          <button onClick={this.handleSubmit}>Submit</button>
+        </div>
 
         <h3>Indexes I have seen:</h3>
         {this.renderSeenIndexes()}
