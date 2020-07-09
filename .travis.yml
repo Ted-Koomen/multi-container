@@ -1,0 +1,19 @@
+sudo: required
+services:
+    - docker
+before_install:
+    - docker build -t tedkoomen/react-test -f ./client/Dockerfile ./
+script:
+    - docker run tedkoomen/react-test npm test -- --coverage
+after_success:
+    - docker build -t tedkoomen/multi-client ./client
+    - docker build -t tedkoomen/multi-nginx ./nginx
+    - docker build -t tedkoomen/multi-server ./server
+    - docker build -t tedkoomen/multi-worker ./worker
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+    - docker push tedkoomen/multi-client
+    - docker push tedkoomen/multi-nginx
+    - docker push tedkoomen/multi-server
+    - docker push tedkoomen/multi-worker
+
+
